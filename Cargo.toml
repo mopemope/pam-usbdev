@@ -1,0 +1,32 @@
+[package]
+name = "pam-usbdev"
+version = "0.0.1"
+authors = ["mopemope <yutaka.matsubara@gmail.com>"]
+description = ""
+homepage = "https://github.com/mopemope/pam-usbdev"
+repository = "https://github.com/mopemope/pam-usbdev"
+readme = "README.md"
+license = "MIT/Apache-2.0"
+edition = "2018"
+
+[lib]
+name = "pam_usbdev"
+crate-type = ["dylib"]
+
+[dependencies]
+log = "0.4"
+env_logger = "0.8"
+libc = "0.2"
+nix = "0.19"
+anyhow = "1.0"
+pam = { git = "https://github.com/anowell/pam-rs", package = "pam" }
+syslog = "5"
+libusb = "0.3"
+toml = "0.5"
+serde = "1"
+serde_derive = "1"
+
+[package.metadata.scripts]
+strip = "strip target/release/libpam_usbdev.so"
+install = "sudo cp target/release/libpam_usbdev.so /lib/security/pam_usbdev.so"
+pam_test = "gcc -o target/pam_test pam_test.c -lpam -lpam_misc"
